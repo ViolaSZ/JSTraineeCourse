@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<style>
+			.enabled {
+				background-color: #d7b0ff;
+			}
+
+			.disabled {
+				background-color: #c324eb;
+			}
+
+			button {
+				margin-right: 3px;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="wrapper">
+			<div data-tabname="one">One</div>
+			<div data-tabname="two">Two</div>
+			<div data-tabname="three">Three</div>
+		</div>
+		<script>
+			function asTabs(node) {
+				let tabs = [];
+				let listTabs = document.createElement("div");
+
+				for (let i = 0; i < node.childNodes.length; i++) {
+					let child = node.childNodes[i];
+					if (child.nodeType === document.ELEMENT_NODE){
+						tabs.push(child);
+					}
+				}
+
+				tabs.forEach((tab, i) => {
+					let button = document.createElement("button");
+					button.textContent = tab.getAttribute("data-tabname");
+					button.addEventListener("click", () => { selectTab(i); })
+					listTabs.appendChild(button);
+				});
+				node.insertBefore(listTabs, node.firstChild);
+
+				function selectTab (selected) {
+					tabs.forEach((tab, i) => {
+						tab.style.display = i === selected ? "" : "none";
+					});
+					for (let i = 0; i < listTabs.childNodes.length; i++) {
+						listTabs.childNodes[i].className = i === selected ? "enabled" : "disabled";
+					}
+				}
+				selectTab(0);
+			}
+			asTabs(document.querySelector("#wrapper"));
+		</script>
+	</body>
+</html>

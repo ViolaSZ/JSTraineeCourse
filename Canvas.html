@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+	</head>
+	<body>
+	<canvas width="600" height="200"></canvas>
+	<script>
+		function trapezoid(x, y){
+			cx.beginPath();
+			cx.moveTo(x, y);
+			cx.lineTo(x + 50, y);
+			cx.lineTo(x + 80, y + 50);
+			cx.lineTo(x - 30, y + 50);
+			cx.closePath();
+			cx.stroke();
+		}
+		function diamond(x, y){
+			cx.fillStyle = "red";
+			cx.translate(x + 30, y + 30);
+			cx.rotate(Math.PI / 4);
+			cx.fillRect(-30, -30, 60, 60);
+			cx.resetTransform();
+		}
+
+		function zigzag(x, y){
+			cx.beginPath();
+			cx.moveTo(x, y);
+
+			for (let i = 0; i < 6; i++) {
+				cx.lineTo(x + 80, y + i * 10 + 6);
+				cx.lineTo(x, y + i * 10 + 12);
+			}
+			cx.stroke();
+		}
+
+		function spiral(x, y){
+			let rad = 60;
+			let xCenter = x + rad;
+			let yCenter = y + rad;
+
+			cx.beginPath();
+			cx.moveTo(xCenter, yCenter);
+
+			for (let i = 0; i < 300; i++) {
+				let angle = i * Math.PI / 48;
+				let distance = rad * i / 300;
+				cx.lineTo(xCenter + Math.cos(angle) * distance,
+					yCenter + Math.sin(angle) * distance);
+			}
+			cx.stroke()
+		}
+
+		function star(x, y){
+			let rad = 60;
+			let xCenter = x + rad;
+			let yCenter = y + rad;
+
+			cx.beginPath();
+			cx.moveTo(xCenter + rad, yCenter);
+
+			for (let i = 0; i < 9; i++) {
+				let angle = i * Math.PI / 4;
+				cx.quadraticCurveTo(xCenter, yCenter,
+					xCenter + Math.cos(angle) * rad,
+					yCenter + Math.sin(angle) * rad);
+			}
+			cx.fillStyle = "yellow";
+			cx.fill();
+		}
+			let cx = document.querySelector("canvas").getContext("2d");
+			trapezoid(50, 50);
+			diamond(160, 50);
+			zigzag(250, 50);
+			spiral(350, 30);
+			star(480, 30);
+	</script>
+	</body>
+</html>
